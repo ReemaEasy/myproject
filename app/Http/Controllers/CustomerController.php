@@ -20,7 +20,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +28,24 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the input
+        $request->validate([
+            'user_name' => 'required|string|max:255',
+            'contact' => 'required|string|max:15',
+        ]);
+
+        // Create a new customer record
+        $customer = Customer::create([
+            'user_name' => $request->user_name,
+            'contact' => $request->contact,
+        ]);
+    
+
+    return response()->json([
+        'message' => 'Customer added successfully',
+        'customer' => $customer // Return the created customer data
+    ], 201);
+
     }
 
     /**
